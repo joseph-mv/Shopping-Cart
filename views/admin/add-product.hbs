@@ -1,0 +1,44 @@
+<div style="text-align: center;">
+    <h1>Add Product</h1>
+
+</div>
+<div>
+    <div class="container d-flex justify-content-center">
+        <form class="row g-3" action="/admin/add-product" method="post">
+            <div class="col-md-12">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="col-md-12">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control" id="price" name="price" required>
+            </div>
+            <div class="col-md-12">
+                <label for="category" class="form-label">Category</label>
+                <select id="category" name="category" class="form-select" required>
+                    <option value="">Select Category</option>
+                    <option value="mobile">Mobile</option>
+                    <option value="laptop">Laptop</option>
+                    <option value="speaker">Speaker</option>
+
+                    <option value="clothing">Clothing</option>
+                    <option value="books">Books</option>
+
+                </select>
+            </div>
+            <div class="col-md-12">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
+            </div>
+            <div class="col-md-12">
+                <label for="image" class="form-label">Image </label>
+                <input type="file" name="image" class="form-control" id="image">
+            </div>
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+
+</div>

@@ -13,6 +13,7 @@
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "mkdir": "^0.0.2",
+    "mongodb": "^6.5.0",
     "morgan": "~1.9.1"
   },
   "devDependencies": {
