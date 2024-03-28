@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var db=require('./config/connection')
+var fileUpload=require('express-fileupload')
 
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
@@ -32,8 +33,10 @@ else
 console.log('connected successfully');
 
 });
+app.use(fileUpload())
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
