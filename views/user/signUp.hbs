@@ -12,7 +12,12 @@
    <div class="container">
   <div class="wrapper">
     <div class="title"><span>Signup Form</span></div>
-    <form action="#" id="signupForm" >  <div class="row">
+          <div style="text-align: center; margin-top: 5px;">
+  {{#if status}}
+  <P>{{status}}</P>
+  {{/if}}
+</div>
+    <form action="/signUp" id="signupForm" method="post" >  <div class="row">
         <i class="fas fa-user"></i>
         <input type="text" name="name" placeholder="Full Name" required>
       </div>
@@ -46,12 +51,15 @@
       <div class="row button">
         <input type="submit" value="Signup">
       </div>
+
       <div class="login-link">
         Already have an account? <a href="/login">Login</a>
       </div>
     </form>
   </div>
 </div>
+
+
 
 
   </body>
