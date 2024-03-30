@@ -6,8 +6,10 @@ var logger = require('morgan');
 var db=require('./config/connection')
 var fileUpload=require('express-fileupload')
 
+var session = require('express-session')
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
+
 
 var app = express();
 
@@ -33,9 +35,23 @@ else
 console.log('connected successfully');
 
 });
+app.use(session({
+  secret: 'cat running',
+  resave:true,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 14400000, // 4 hours in milliseconds
+    httpOnly: true,
+    secure: false // If using HTTPS
+  },
+
+}))
 app.use(fileUpload())
 app.use('/', userRouter);
+
 app.use('/admin', adminRouter);
+
+
 
 
 // catch 404 and forward to error handler

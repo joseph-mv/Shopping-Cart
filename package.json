@@ -12,6 +12,7 @@
     "express": "~4.16.1",
     "express-fileupload": "^1.5.0",
     "express-handlebars": "^7.1.2",
+    "express-session": "^1.18.0",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "mkdir": "^0.0.2",

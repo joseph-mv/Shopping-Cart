@@ -14,12 +14,19 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle btn btn-success" style="width: 100px;" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           {{#if userName}}
+           {{userName}}
+           {{else}}
             Account
+            {{/if}}
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="/login">Log in </a></li>
+ {{#if userName}}
+            <li><a class="dropdown-item" href="/logout">Log out </a></li>
             <li><a class="dropdown-item" href="#">Profile</a></li>
-            
+          {{else}}  
+          <li><a class="dropdown-item" href="/login">Login</a></li>
+          {{/if}}
           </ul>
         </li>
         

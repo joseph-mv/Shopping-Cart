@@ -1,38 +1,61 @@
 var express = require('express');
 var router = express.Router();
-var productHelper=require('../Helpers/product-helpers')
+var productHelper = require('../Helpers/product-helpers')
 var userHelper = require('../Helpers/user-helpers')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  productHelper.productList().then((products)=>{
-    res.render('user/index',{products})
+router.get('/', function (req, res, next) {
+  productHelper.productList().then((products) => {
+    // console.log(req.session)
+    userName=req.session.userName
+    res.render('user/index', { products,userName })
   })
 });
-router.get('/login',((req, res, next) => {
-  res.render('user/login')
+router.get('/login', ((req, res, next) => {
+  // console.log(req.session)
+  res.render('user/login',{loggedError:req.session.loggedError})
 }))
 
-router.get('/signUp',(req, res, next) => {
-  
-  console.log('signup')
+router.get('/signUp', (req, res, next) => {
+
   res.render('user/signUp')
 })
 
-router.post('/signUp',(req,res)=>{
- userHelper.signUp(req.body).then((user)=>{
- 
-  if(user.status){
-    res.redirect('/login')
-  }
-  else{
-    res.render('user/signUp',{status:'Oops, that email is already registered.'})
-    
-  }
-  
+router.post('/signUp', (req, res) => {
+  console.log(req.body)
+  userHelper.signUp(req.body).then((user) => {
+   if (user.status) {
+      res.redirect('/login')
+    }
+    else {
+      res.render('user/signUp', { status: 'Oops, that email is already registered.' })
+    }
  })
-}
+})
+router.post('/login',(req, res) => {
+  userHelper.login(req.body).then((response) => {
+  
+    if(response.status){
+      req.session.userName=response.userName
+      req.session.userLoggedIn=true
+      // console.log(req.session)
+      res.redirect('/')
 
-)
+    }
+    else{
+      req.session.loggedError='Invalid Email or Password'
+      // console.log(req.session)
+      res.redirect('/login')
+    }
+  })
+})
+router.get("/logout",(req, res) => {
+  req.session.userName=null
+      req.session.userLoggedIn=false
+      res.redirect('/login')
+
+})
+
+
 
 module.exports = router;
