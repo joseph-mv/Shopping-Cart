@@ -3,11 +3,24 @@ var router = express.Router();
 var productHelper = require('../Helpers/product-helpers')
 var userHelper = require('../Helpers/user-helpers')
 
+verifyLogin=function(){
+  return function(req,res,next){
+    if(req.session.userLoggedIn){
+      next()
+    }
+    else{
+      res.redirect('/login')
+    }
+  }
+}
+
 /* GET home page. */
+
 router.get('/', function (req, res, next) {
-  productHelper.productList().then((products) => {
-    // console.log(req.session)
+  productHelper.productList().then(async (products) => {
+    console.log(req.session)
     userName=req.session.userName
+   
     res.render('user/index', { products,userName })
   })
 });
@@ -34,10 +47,12 @@ router.post('/signUp', (req, res) => {
 })
 router.post('/login',(req, res) => {
   userHelper.login(req.body).then((response) => {
-  
+  console.log(response)
     if(response.status){
       req.session.userName=response.userName
       req.session.userLoggedIn=true
+      req.session.userId=response.userId
+   
       // console.log(req.session)
       res.redirect('/')
 
@@ -52,8 +67,29 @@ router.post('/login',(req, res) => {
 router.get("/logout",(req, res) => {
   req.session.userName=null
       req.session.userLoggedIn=false
+      req.session.userId=null
       res.redirect('/login')
 
+})
+router.get('/cart',verifyLogin(), (req, res) => {
+res.render('user/cart',{userName})
+})
+
+router.post('/add-to-cart',verifyLogin(),(req,res)=>{
+  productId=req.body.productId
+userHelper.addToCart(productId,req.session.userId).then(async()=>{
+ 
+await userHelper.cartCount(req.session.userId).then((responce)=>{
+
+count=responce.quantity
+
+
+res.json(count)
+})
+ 
+}
+  
+)
 })
 
 

@@ -11,13 +11,43 @@
     <li class="list-group-item">Category: {{this.category}}</li>
    
   </ul>
+
   {{!-- <div class="card-body">
     <a href="#" class="card-link">Card link</a>
     <a href="#" class="card-link">Another link</a>
   </div> --}}
+
+  <div style="text-align: center;">
+    <button class="btn btn-success" onclick="addtoCart('{{this._id}}')" >Add To Cart</button>
+  </div>
 </div>
+
 
 {{/each}}
 
 </div>
+<script>
+ function addtoCart(productId){
+  console.log(productId);
+  
+    $.ajax({
+      url: "/add-to-cart", // Replace with your server-side script URL
+      type: "POST",
+      data:{
+        productId
+      },
+      dataType: "json", // Expect JSON response from server
+      success: function(response) {
+        console.log(response);
+        
+        document.getElementById('count').innerText=response
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        $("#message").html("Error: " + textStatus + " - " + errorThrown);
+      }
+    });
+
+ }
+  
+</script>
 
