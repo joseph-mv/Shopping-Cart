@@ -19,9 +19,20 @@ verifyLogin=function(){
 router.get('/', function (req, res, next) {
   productHelper.productList().then(async (products) => {
     console.log(req.session)
-    userName=req.session.userName
+    if(req.session.userLoggedIn){
+      count=await userHelper.cartCount(req.session.userId)
+      console.log(count.quantity)
+      userName=req.session.userName
+      
+      res.render('user/index', { products,userName,count:count.quantity })
+    }
+   else{
+    
+    res.render('user/index', { products})
+   }
    
-    res.render('user/index', { products,userName })
+   
+    
   })
 });
 router.get('/login', ((req, res, next) => {
@@ -72,7 +83,7 @@ router.get("/logout",(req, res) => {
 
 })
 router.get('/cart',verifyLogin(), (req, res) => {
-res.render('user/cart',{userName})
+res.render('user/cart',{userName,count:count.quantity})
 })
 
 router.post('/add-to-cart',verifyLogin(),(req,res)=>{
