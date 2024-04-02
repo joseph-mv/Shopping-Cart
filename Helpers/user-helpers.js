@@ -3,6 +3,7 @@ const promise = require('promise')
 const bcrypt = require('bcrypt');
 const collection = require("../config/collection");
 const { response } = require('express');
+const { ObjectId } = require('mongodb');
 
 
 module.exports = {
@@ -46,11 +47,12 @@ module.exports = {
 
     },
     addToCart:  (productId, userId) =>{
+        console.log('add to cart')
 return new promise(async (resolve, reject) =>  {
-        
+       
     cart = await db.get().collection(collection.Cart_Collection).findOne({ userId: userId })
       if (cart) {
-          product = await db.get().collection(collection.Cart_Collection).updateOne({ 'products.productId': { $eq: productId } }, {
+          product = await db.get().collection(collection.Cart_Collection).updateOne({ 'products.productId': { $eq:new ObjectId(productId)  } }, {
               
               $inc: {
                   'products.$.quantity': 1
@@ -58,10 +60,10 @@ return new promise(async (resolve, reject) =>  {
           })
           console.log(product)
       if (product.modifiedCount==0) {
-          db.get().collection(collection.Cart_Collection).updateOne({ userId: userId }, {
+          await db.get().collection(collection.Cart_Collection).updateOne({ userId: userId }, {
               $push: {
                   products: {
-                      productId: productId,
+                      productId: new ObjectId(productId),
                       quantity: 1
                   }
               }
@@ -76,19 +78,50 @@ return new promise(async (resolve, reject) =>  {
           cart = {
               userId: userId,
               products: [{
-                  productId: productId,
+                  productId:new ObjectId(productId),
                   quantity: 1
               }]
           }
-          db.get().collection(collection.Cart_Collection).insertOne(cart).then((responce) => {
+         await db.get().collection(collection.Cart_Collection).insertOne(cart).then((responce) => {
               console.log(responce)
               console.log('new cart')
           })
       }
- resolve()
+    resolve()
   })
     },
     cartCount: async (userId) => {
+        return new promise(async (resolve, reject) => {
+            cart= await db.get().collection(collection.Cart_Collection).findOne({userId:userId})
+            if(cart){
+                console.log('######')
+                db.get().collection(collection.Cart_Collection).aggregate(
+                    [
+                        {
+                            $match: { userId: userId }
+                        },
+                        {
+                           $unwind:'$products'
+                        },{
+                            $group:{ _id:null, quantity:{$sum:'$products.quantity'}}
+                        }
+                         ]
+                ).toArray().then((responce)=>{
+                    console.log("$$$$$")
+                    console.log(responce)
+                    resolve(responce[0])
+                })
+            }
+            else{
+resolve(0)
+            }
+           
+        })
+         
+        
+    },
+    productList:(userId)=>{
+        console.log(userId)
         return new promise(async (resolve, reject) => {
             db.get().collection(collection.Cart_Collection).aggregate(
                 [
@@ -98,14 +131,39 @@ return new promise(async (resolve, reject) =>  {
                     {
                        $unwind:'$products'
                     },{
-                        $group:{ _id:null, quantity:{$sum:'$products.quantity'}}
+                        $lookup: {
+                            from: "Products",
+                            localField:  "products.productId" , 
+                               foreignField: "_id", 
+                             as: "productDetails" 
+                          }
+                    },
+                    {
+                        $project:{
+                            productDetails:  { $arrayElemAt: ["$productDetails", 0] },
+                            products:1,
+                        }
+                    },
+                    {
+                        $addFields: {
+                          price: { $toInt: "$productDetails.price" } // Convert field1 from string to integer
+                        }
+                      },
+                    {
+                        $project: {
+                            total: { $multiply: ["$price", "$products.quantity"] },
+                            productDetails:1,
+                            products:1,
+                          
+                        }  
                     }
+                   
                      ]
             ).toArray().then((responce)=>{
-                resolve(responce[0])
+                console.log(responce)
+                
+                resolve(responce)
             })
         })
-         
-        
     }
 }

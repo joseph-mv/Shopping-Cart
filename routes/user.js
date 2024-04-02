@@ -4,8 +4,10 @@ var productHelper = require('../Helpers/product-helpers')
 var userHelper = require('../Helpers/user-helpers')
 
 verifyLogin=function(){
-  return function(req,res,next){
+  return async function(req,res,next){
     if(req.session.userLoggedIn){
+      count=await userHelper.cartCount(req.session.userId)
+      
       next()
     }
     else{
@@ -20,8 +22,8 @@ router.get('/', function (req, res, next) {
   productHelper.productList().then(async (products) => {
     console.log(req.session)
     if(req.session.userLoggedIn){
-      count=await userHelper.cartCount(req.session.userId)
-      console.log(count.quantity)
+count=await userHelper.cartCount(req.session.userId)
+      console.log(count)
       userName=req.session.userName
       
       res.render('user/index', { products,userName,count:count.quantity })
@@ -83,7 +85,10 @@ router.get("/logout",(req, res) => {
 
 })
 router.get('/cart',verifyLogin(), (req, res) => {
-res.render('user/cart',{userName,count:count.quantity})
+  userHelper.productList(req.session.userId).then((response) => {
+    res.render('user/cart',{userName,count:count.quantity,products:response})
+  })
+
 })
 
 router.post('/add-to-cart',verifyLogin(),(req,res)=>{
@@ -93,6 +98,7 @@ userHelper.addToCart(productId,req.session.userId).then(async()=>{
 await userHelper.cartCount(req.session.userId).then((responce)=>{
 
 count=responce.quantity
+
 
 
 res.json(count)

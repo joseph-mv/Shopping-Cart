@@ -1,1 +1,27 @@
 <div style="text-align: center;"><h1>Cart</h1></div>
+
+ <div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">Name</th>
+          <th scope="col" class="text-center">Price</th>
+          <th scope="col" class="text-center">Quantity</th>
+          <th scope="col" class="text-center">Total</th>
+          <th scope="col" class="text-center">Image</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+        <tr>
+          <td class="text-center">{{this.productDetails.name}}</td>
+          <td class="text-center">{{this.productDetails.price}}</td>
+          <td class="text-center">{{this.products.quantity}}</td>
+          <td class="text-center">{{this.total}}</td>
+          <td class="text-center"><img src="/images/{{this.productDetails._id}}.jpg" class="table-img" alt="Product" width="50px" height="50px"></td>
+        </tr>
+        {{/each}}
+      
+        </tbody>
+    </table>
+  </div>
