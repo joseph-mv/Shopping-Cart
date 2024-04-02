@@ -87,7 +87,10 @@ router.get("/logout",(req, res) => {
 })
 router.get('/cart',verifyLogin(), (req, res) => {
   userHelper.productList(req.session.userId).then((response) => {
-    res.render('user/cart',{userName,count:count.quantity,products:response})
+    userHelper.totalAmount(req.session.userId).then((amount) => {
+      res.render('user/cart',{userName,count:count.quantity,products:response,amount})
+    })
+    
   })
 
 })
@@ -114,8 +117,11 @@ router.post('/quantity-change',(req,res)=>{
   console.log(req.body)
   userHelper.changeQuantity(req.session.userId,req.body.productId,req.body.amount).then(
  userHelper.cartCount(req.session.userId).then((responce)=>{
-  count=responce.quantity
-  res.json(count)
+  userHelper.totalAmount(req.session.userId).then((amount)=>{
+    count=responce.quantity
+    res.json({count,amount})
+  } )
+  
  })
   )
 })
@@ -124,7 +130,8 @@ router.post("/remove-product", (req,res)=>{
   console.log(req.body)
   userHelper.removeProduct(req.body.productId,req.session.userId).then((response)=>
   {
-    res.json(response)
+   res.json(response)
+    
   })
 
 })

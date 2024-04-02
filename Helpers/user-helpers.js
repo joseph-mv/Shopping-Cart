@@ -160,7 +160,7 @@ resolve(0)
                    
                      ]
             ).toArray().then((responce)=>{
-                console.log(responce)
+                // console.log(responce)
                 
                 resolve(responce)
             })
@@ -202,6 +202,48 @@ resolve(0)
                 })
                 console.log(response)
                 resolve(response)
+            })
+        })
+    },
+    totalAmount:(userId)=>{
+        return new promise((resolve,reject)=>{
+            db.get().collection(collection.Cart_Collection).aggregate([
+                {
+                    $match:{userId:userId}
+                },
+                {
+                    $unwind:'$products'
+                }
+                ,{
+                    $lookup: {
+                        from: "Products",
+                        localField:  "products.productId" , 
+                           foreignField: "_id", 
+                         as: "productDetails" 
+                      }
+                },
+                {
+                    $project:{
+                        productDetails:  { $arrayElemAt: ["$productDetails", 0] },
+                        products:1,
+                    }
+                },
+                {
+                    $addFields: {
+                      price: { $toInt: "$productDetails.price" } // Convert field1 from string to integer
+                    }
+                  },
+                  {
+                    $group:
+                      {
+                        _id: null,
+                        totalAmount: { $sum: { $multiply: [ "$price", "$products.quantity" ] } },
+                       
+                      }
+                  }
+
+            ]).toArray().then((products)=>{
+                resolve(products[0].totalAmount)
             })
         })
     }

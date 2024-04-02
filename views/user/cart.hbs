@@ -24,6 +24,14 @@
         <td class="text-center"> <button class="btn btn-danger" onclick="openPopup('{{this.productDetails._id}}')" >Remove</button></td>       
         </tr>
         {{/each}}
+        <tr>
+          <td class="text-center">Total amount: <span id="totalAmount"> {{amount}}</span></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="text-center"><button class="btn btn-success">Proceed to Checkout</button></td>
+        </tr>
       
         </tbody>
     </table>
@@ -135,8 +143,9 @@ $.ajax({
         amount
       },
       dataType: "json", // Expect JSON response from server
-       success: function(count) {
-        document.getElementById('count').innerText=count
+       success: function(res) {
+        document.getElementById('count').innerText=res.count
+        document.getElementById("totalAmount").innerText=res.amount
        quantity=parseInt(quantity)+amount
        total=quantity*parseFloat(price)
        document.getElementById('quantity'+proId).innerText=quantity
