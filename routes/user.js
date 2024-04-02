@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var productHelper = require('../Helpers/product-helpers')
-var userHelper = require('../Helpers/user-helpers')
+var userHelper = require('../Helpers/user-helpers');
+const { resolve } = require('promise');
 
 verifyLogin=function(){
   return async function(req,res,next){
@@ -107,6 +108,25 @@ res.json(count)
 }
   
 )
+})
+
+router.post('/quantity-change',(req,res)=>{
+  console.log(req.body)
+  userHelper.changeQuantity(req.session.userId,req.body.productId,req.body.amount).then(
+ userHelper.cartCount(req.session.userId).then((responce)=>{
+  count=responce.quantity
+  res.json(count)
+ })
+  )
+})
+
+router.post("/remove-product", (req,res)=>{
+  console.log(req.body)
+  userHelper.removeProduct(req.body.productId,req.session.userId).then((response)=>
+  {
+    res.json(response)
+  })
+
 })
 
 

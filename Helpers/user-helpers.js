@@ -52,7 +52,7 @@ return new promise(async (resolve, reject) =>  {
        
     cart = await db.get().collection(collection.Cart_Collection).findOne({ userId: userId })
       if (cart) {
-          product = await db.get().collection(collection.Cart_Collection).updateOne({ 'products.productId': { $eq:new ObjectId(productId)  } }, {
+          product = await db.get().collection(collection.Cart_Collection).updateOne({ userId: userId ,'products.productId': { $eq:new ObjectId(productId)  } }, {
               
               $inc: {
                   'products.$.quantity': 1
@@ -94,7 +94,7 @@ return new promise(async (resolve, reject) =>  {
         return new promise(async (resolve, reject) => {
             cart= await db.get().collection(collection.Cart_Collection).findOne({userId:userId})
             if(cart){
-                console.log('######')
+                // console.log('######')
                 db.get().collection(collection.Cart_Collection).aggregate(
                     [
                         {
@@ -163,6 +163,45 @@ resolve(0)
                 console.log(responce)
                 
                 resolve(responce)
+            })
+        })
+    },
+    changeQuantity:(userId,productId,amount)=>{
+        console.log(userId,productId,amount)
+        // cart = await db.get().collection(collection.Cart_Collection).findOne({ userId: userId })
+      return new promise((resolve,reject)=>{
+        db.get().collection(collection.Cart_Collection).updateOne({userId: userId , 'products.productId': { $eq:new ObjectId(productId)  } }, {
+              
+            $inc: {
+                'products.$.quantity': parseInt(amount)
+            }
+        }).then((responce)=>{
+            // console.log(responce)
+            resolve(responce)
+        })
+        
+
+      })
+        
+     
+          
+
+    },
+    removeProduct:(productId,userId)=>{
+        return new promise((resolve,reject)=>{
+            db.get().collection(collection.Cart_Collection).updateOne(
+                {userId: userId  },
+                { $pull: { products: { productId:new ObjectId(productId)  } } },
+            ).then((response)=>{
+                db.get().collection(collection.Cart_Collection).findOne({userId:userId}).then((cart)=>{
+                    if(cart.products.length===0){
+                        db.get().collection(collection.Cart_Collection).deleteOne({userId:userId}).then((responce)=>{
+                            resolve(responce)
+                        })
+                    }
+                })
+                console.log(response)
+                resolve(response)
             })
         })
     }
