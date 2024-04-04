@@ -1,0 +1,59 @@
+ <style>
+    body {
+      background-color: #eff9f7; /* Light green background */
+    }
+    .form-container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 10px; /* Rounded corners */
+      background-color: #c3e6cb; /* Beautiful green background */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+    .form-label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+  </style>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <form method="post" action="/checkout">
+        <h2 class="text-center mb-4">Order Form</h2>
+        <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input type="text" class="form-control" id="name" name="name" value="joseph" required>
+        </div>
+        <div class="mb-3">
+          <label for="deliveryAddress" class="form-label">Delivery Address:</label>
+          <textarea class="form-control" id="deliveryAddress" name="deliveryAddress" rows="3"  required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="pincode" class="form-label">Pincode:</label>
+          <input type="number" class="form-control" id="pincode" name="pincode" value="673513" required>
+        </div>
+        <div class="mb-3">
+          <label for="Phone Number" class="form-label">Phone Number:</label>
+          <input type="tel" class="form-control" id="Phone Number" name="Phone Number" value="9048154979" required>
+        </div>
+        <div class="form-check form-check-inline mb-3">
+          <input class="form-check-input" type="radio" name="paymentMethod" id="paymentMethodCod" value="cod" checked>
+          <label class="form-check-label" for="paymentMethodCod">Cash on Delivery (COD)</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="paymentMethod" id="paymentMethodOnline" value="online">
+          <label class="form-check-label" for="paymentMethodOnline">Online Payment</label>
+        </div>
+          <div class="mb-3" style="text-align: center;">
+          <label class="form-label">Total Amount:</label>
+          <span class="fw-bold">{{amount}}</span>  </div>
+        <div class="d-grid gap-2 mt-4">
+          <button type="submit" class="btn btn-success btn-lg">Place Order</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-mQrJ3CsUXvOqNli9RX65vJZb0Cwl6jyEMfFAMhHRcuGaMfAPzW4zWiwBpA0MzHdA" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -136,6 +136,33 @@ router.post("/remove-product", (req,res)=>{
 
 })
 
+router.get('/checkout',verifyLogin(),async (req,res)=>{
+  amount=await userHelper.totalAmount(req.session.userId)
+  res.render('user/checkout',{userName,count:count.quantity,amount})
+})
+router.post('/checkout',verifyLogin(),(req,res)=>{
+userHelper.makeOrders(req.session.userId,req.body,amount).then((response)=>{
+  if(req.body.paymentMethod=='cod'){
+    res.render('user/order-success',{userName})
+  }
+})
+})
+router.get("/orders",verifyLogin(),async (req,res)=>{
+userHelper.orderList(req.session.userId).then((response)=>{
+  console.log('********************')
+  console.log(response)
+  res.render('user/orders',{userName,orders:response})
+})
+})
+router.get('/show-products/:id',verifyLogin(),async (req,res)=>{
+  orderId=req.params.id
+  userHelper.orderedProducts(orderId).then((products)=>{
+res.render('user/show-products',{userName,products})
+  })
+
+  
+})
+
 
 
 module.exports = router;

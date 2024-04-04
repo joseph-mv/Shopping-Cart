@@ -1,0 +1,26 @@
+<div class="table-responsive sticky-top m-3" >
+  <table class="table table-hover table-bordered">
+    <thead class="table-success">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Image</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+        {{#each products}}
+      <tr>
+        <td>{{this.productDetails.name}}</td>
+        <td>{{this.productDetails.price}}</td>
+        <td>{{this.quantity}}</td>
+        <td><img src="/images/{{this.productDetails._id}}.jpg" alt="Product 1 Image" width="50" height="50" class="img-thumbnail"></td>
+        <td>In Stock</td>
+      </tr>
+      {{/each}}
+      
+
+      </tbody>
+  </table>
+</div>

@@ -30,7 +30,12 @@
           <td></td>
           <td></td>
           <td></td>
-          <td class="text-center"><button class="btn btn-success">Proceed to Checkout</button></td>
+          {{#if count}}
+          <td class="text-center"><a href="/checkout" class="btn btn-success">Proceed to Checkout</a href="/checkout"></td>
+        {{else}} <td class="text-center"><a href="/" class="btn btn-success">Add Product</a href="/checkout"></td>
+        
+        {{/if}}
+
         </tr>
       
         </tbody>

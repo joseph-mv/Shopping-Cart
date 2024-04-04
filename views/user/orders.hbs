@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Awesome Table</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles */
+    .green-bg {
+      background-color: #c3e6cb; /* Green shade */
+      
+    }
+  </style>
+</head>
+<body>
+
+<div class="container mt-5">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr class="green-bg text-black">
+          <th scope="col">Name</th>
+          <th scope="col">Address</th>
+          <th scope="col">Date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Payment Method</th>
+          <th scope="col">Total Amount</th>
+          <th scope="col"></th> <!-- Empty header -->
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orders}}
+        <tr>
+          <td>{{this.orderDetails.name}}
+          </td>
+          <td>{{this.orderDetails.deliveryAddress}} <br>
+          Pincode:{{this.orderDetails.pincode}} <br>
+          Phone:</td>
+          <td>{{this.Date}}</td>
+          <td>{{this.status}}</td>
+          <td>{{this.orderDetails.paymentMethod}}</td>
+          <td>{{this.totalAmount}}</td>
+          <td><a href="/show-products/{{this._id}}" class="btn btn-success">Show Products</a></td>
+        </tr>
+        {{/each}}
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
