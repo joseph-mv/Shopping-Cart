@@ -3,6 +3,7 @@ var router = express.Router();
 var productHelper = require('../Helpers/product-helpers')
 var userHelper = require('../Helpers/user-helpers');
 const { resolve } = require('promise');
+const Razorpay = require('razorpay');
 
 verifyLogin=function(){
   return async function(req,res,next){
@@ -136,31 +137,55 @@ router.post("/remove-product", (req,res)=>{
 
 })
 
+
 router.get('/checkout',verifyLogin(),async (req,res)=>{
   amount=await userHelper.totalAmount(req.session.userId)
+  console.log(amount)
   res.render('user/checkout',{userName,count:count.quantity,amount})
 })
 router.post('/checkout',verifyLogin(),(req,res)=>{
 userHelper.makeOrders(req.session.userId,req.body,amount).then((response)=>{
+ 
+  orderId=response.insertedId
+  
   if(req.body.paymentMethod=='cod'){
     res.render('user/order-success',{userName})
+  }
+  else{
+    userHelper.razorpay(amount,orderId).then(async(response)=>{
+      userDetails=await userHelper.userDetails(orderId)
+      console.log(userDetails)
+      console.log('$$$$$$payment')
+      res.render("user/online-payment",{userName,response,count:count.quantity,userDetails})
+    
+
+    })
   }
 })
 })
 router.get("/orders",verifyLogin(),async (req,res)=>{
 userHelper.orderList(req.session.userId).then((response)=>{
-  console.log('********************')
+  // console.log('********************')
   console.log(response)
-  res.render('user/orders',{userName,orders:response})
+  res.render('user/orders',{userName,orders:response,count:count.quantity,})
 })
 })
 router.get('/show-products/:id',verifyLogin(),async (req,res)=>{
   orderId=req.params.id
   userHelper.orderedProducts(orderId).then((products)=>{
-res.render('user/show-products',{userName,products})
+res.render('user/show-products',{userName,products,count:count.quantity,})
   })
 
   
+})
+router.post("/verify-payment",verifyLogin(),async (req,res)=>{
+  
+  console.log(req.body)
+ userHelper.verifyPayment(req.body).then(()=>{
+  userHelper.changeOrderStatus(orderId,req.session.userId).then(()=>{
+    res.render('user/order-success',{userName})
+  })
+ })
 })
 
 
