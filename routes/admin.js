@@ -44,6 +44,12 @@ router.post("/login" , function(req, res, next) {
     }
   })
 })
+router.get('/logout',(req,res)=>{
+  req.session.adminId=null;
+  req.session.adminLoggedIn=false;
+  res.redirect('/admin')
+
+})
 router.get('/add-product',verifyAdmin(), (req,res)=>{
 console.log(req.session)
   res.render('admin/add-product',{admin:true,adminId:req.session.adminId})
