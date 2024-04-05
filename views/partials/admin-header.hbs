@@ -15,6 +15,25 @@
          <li class="nav-item">
           <a class="nav-link" href="#">Users</a>
         </li>
+                <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle btn btn-success" style="width: 100px;" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           {{#if adminId}}
+           {{adminId}}
+           {{else}}
+            Account
+            {{/if}}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+ {{#if adminId}}
+            <li><a class="dropdown-item" href="/logout">Log out </a></li>
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+          {{else}}  
+          <li><a class="dropdown-item" href="/login">Login</a></li>
+          {{/if}}
+          </ul>
+        </li>
+        
+      </ul>
       
         
       </ul>

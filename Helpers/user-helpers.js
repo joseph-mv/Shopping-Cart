@@ -268,7 +268,7 @@ module.exports = {
             }
             if (orderDetails.paymentMethod == 'cod') {
                 orders.status = 'placed'
-                db.get().collection(collection.Cart_Collection).drop({ userId: userId })
+                db.get().collection(collection.Cart_Collection).deleteOne({ userId: userId })
 
             }
             else {
@@ -374,7 +374,7 @@ module.exports = {
                 status:'placed'
             }
         }).then(()=>{
-            db.get().collection(collection.Cart_Collection).drop({ userId: userId })
+            db.get().collection(collection.Cart_Collection).deleteOne({ userId: userId })
             resolve()
         })
      })

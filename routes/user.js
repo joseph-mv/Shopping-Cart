@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var productHelper = require('../Helpers/product-helpers')
 var userHelper = require('../Helpers/user-helpers');
-const { resolve } = require('promise');
+
 const Razorpay = require('razorpay');
 
 verifyLogin=function(){
@@ -40,8 +40,8 @@ count=await userHelper.cartCount(req.session.userId)
   })
 });
 router.get('/login', ((req, res, next) => {
-  // console.log(req.session)
-  res.render('user/login',{loggedError:req.session.loggedError})
+  console.log(req.session)
+  res.render('user/login')
 }))
 
 router.get('/signUp', (req, res, next) => {
@@ -71,11 +71,13 @@ router.post('/login',(req, res) => {
       // console.log(req.session)
       res.redirect('/')
 
+
     }
     else{
       req.session.loggedError='Invalid Email or Password'
       // console.log(req.session)
-      res.redirect('/login')
+      res.render('user/login',{loggedError:req.session.loggedError})
+     
     }
   })
 })
