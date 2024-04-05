@@ -2,6 +2,7 @@ db = require('../config/connection')
 const promise = require('promise')
 const collection = require('../config/collection')
 const bcrypt = require('bcrypt');
+const { ObjectId } = require('mongodb');
 module.exports = {
 
     login:(admin)=>{
@@ -45,6 +46,27 @@ module.exports = {
 
             db.get().collection('Products').find().toArray().then((data) => {
 
+                resolve(data)
+            })
+        })
+    },
+    getProductDetails: (proId) => {
+        return new promise((resolve,reject)=>{
+            console.log(proId)
+            db.get().collection(collection.Product_Collection).findOne({_id:new ObjectId(proId) }).then((data) => {
+                
+                console.log(data)
+                resolve(data)
+            })
+        })
+    },
+    editProduct:(product)=>{
+        return new promise((resolve,reject)=>{
+           
+            db.get().collection(collection.Product_Collection).findOneAndUpdate({_id:new ObjectId(product.proId) },{
+                $set:{name:product.name,price:product.price,category:product.category,description:product.description}}).then((data) => {
+                
+                console.log(data)
                 resolve(data)
             })
         })

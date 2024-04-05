@@ -1,0 +1,52 @@
+<div style="text-align: center;">
+    <h1>Edit Product</h1>
+
+</div>
+<div>
+    <div class="container d-flex justify-content-center">
+        <form class="row g-3" action="/admin/edit-product" method="post" enctype="multipart/form-data">
+            <div class="col-md-12">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{product.name}}" >
+            </div>
+            <div class="col-md-12">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control" id="price" name="price" value="{{product.price}}" >
+            </div>
+            <div class="col-md-12">
+                <label for="category" class="form-label">Category</label>
+                <select id="category"  name="category" class="form-select" required >
+                    <option value="{{product.category}}" > Select Category</option>
+                    <option value="Mobile" >Mobile</option>
+                    <option value="Laptop" >Laptop</option>
+                    <option value="Speaker">Speaker</option>
+
+                    <option value="Clothing">Clothing</option>
+                    <option value="Books">Books</option>
+
+                </select>
+            </div>
+            <div class="col-md-12">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" name="description" id="description" rows="3"  required>{{product.description}}</textarea>
+            </div>
+            <div class="col-md-12">
+                <label for="image" class="form-label">Image </label> <br>
+                <img src="/images/{{product._id}}.jpg" id="oldImage" style="margin: 5px;" width="50px"  alt="">
+                <input type="file" onchange="changeImage()" name="image" class="form-control" id="image">
+            </div>
+            <input type="text" name="proId" value="{{product._id}}" hidden>
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+
+<script>
+    function changeImage(){
+        document.getElementById("oldImage").src=URL.createObjectURL(event.target.files[0])
+    }
+</script>

@@ -30,10 +30,7 @@ router.post("/login" , function(req, res, next) {
       req.session.adminId=req.body.adminId;
       req.session.adminLoggedIn=true
       console.log(req.session)
-      productHelper.productList().then((products)=>{
-      
-        res.render('admin/view-products',{admin:true,products,adminId:req.session.adminId})
-      })
+     res.redirect("/admin/view-products")
       
     }
     else{
@@ -42,6 +39,12 @@ router.post("/login" , function(req, res, next) {
       res.render('admin/login',{admin:true,loggedErr:req.session.adminLoggedErr})
  
     }
+  })
+})
+router.get('/view-products',verifyAdmin(),(req,res)=>{
+  productHelper.productList().then((products)=>{
+      
+    res.render('admin/view-products',{admin:true,products,adminId:req.session.adminId})
   })
 })
 router.get('/logout',(req,res)=>{
@@ -71,6 +74,29 @@ productHelper.addProduct(req.body,((proId)=>{
 
 
 } )
+router.get("/edit-products",verifyAdmin(),(req,res)=>{
+  // console.log(req.params.products)
+  
+ let proId=req.query.proId
+  
+  productHelper.getProductDetails(proId).then((product)=>{
+    res.render("admin/edit-product",{admin:true,adminId:req.session.adminId,product})
+  })
+})
+router.post("/edit-product",verifyAdmin(),(req,res)=>{
+  console.log(req.body)
+  console.log(req.files)
+  // let proId=req.body.proId
+  productHelper.editProduct(req.body).then(()=>{
+    if(req.files){
+      req.files.image.mv(path.join(__dirname,'../public/images/'+req.body.proId+'.jpg'))
+    }
+    
+    res.redirect('/admin/view-products')
+ 
+  })
+ 
+})
 
 
 module.exports = router;
