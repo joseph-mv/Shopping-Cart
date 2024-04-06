@@ -115,23 +115,43 @@ router.get("/userOrders:id",verifyAdmin(),(req,res)=>{
   userId=req.params.id
   userHelper.orderList(userId).then((orders)=>{
     console.log(orders)
-    res.render('admin/user-orders',{admin:true,adminId:req.session.adminId,orders})
+    res.render('admin/orders',{admin:true,adminId:req.session.adminId,orders})
   })
 })
-router.get("/show-products/:id",verifyAdmin(),(req,res)=>{
-  orderId=req.params.id
-  console.log(orderId)
+router.get("/show-products",verifyAdmin(),(req,res)=>{
+  orderId=req.query.id
+  orderStatus=req.query.status
+  if(orderStatus=='placed'){placed=true}
+  else{placed=false}
+  
   userHelper.orderedProducts(orderId).then((products)=>{
-    res.render('admin/show-products',{admin:true,adminId:req.session.adminId,products})
+    console.log(products)
+    res.render('admin/show-products',{admin:true,adminId:req.session.adminId,products,placed})
   })
 })
 router.get('/allOrders',verifyAdmin(),(req,res)=>{
   
   productHelper.allOrders().then((orders)=>{
     console.log(orders)
-    res.render('admin/user-orders',{admin:true,adminId:req.session.adminId,orders})
+    res.render('admin/orders',{admin:true,adminId:req.session.adminId,orders})
+  })
+
+})
+
+router.post("/shipping",verifyAdmin(),(req,res)=>{
+  console.log(req.body)
+  productHelper.statusShipping(req.body).then((data)=>{
+    console.log(data)
+    res.json(data)
   })
 })
 
+router.post("/deliver",verifyAdmin(),(req,res)=>{
+  console.log(req.body)
+  productHelper.statusDeliver(req.body).then((data)=>{
+    console.log(data)
+    res.json(data)
+  })
+})
 
 module.exports = router;

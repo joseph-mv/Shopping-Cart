@@ -6,7 +6,8 @@
         <th scope="col">Price</th>
         <th scope="col">Quantity</th>
         <th scope="col">Image</th>
-        <th scope="col">Status</th>
+         <th scope="col">Shipped</th>
+        <th scope="col">Delivered</th>
       </tr>
     </thead>
     <tbody>
@@ -15,8 +16,10 @@
         <td>{{this.productDetails.name}}</td>
         <td>{{this.productDetails.price}}</td>
         <td>{{this.quantity}}</td>
+
         <td><img src="/images/{{this.productDetails._id}}.jpg" alt="Product 1 Image" width="50" height="50" class="img-thumbnail"></td>
-        <td>In Stock</td>
+        <td>{{this.shipped}}</td>
+        <td>{{this.delivered}}</td>
       </tr>
       {{/each}}
       

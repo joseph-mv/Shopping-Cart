@@ -306,7 +306,9 @@ module.exports = {
                 }, {
                     $project: {
                         productDetails: { $arrayElemAt: ["$productDetails", 0] },
-                        quantity: '$products.products.quantity'
+                        quantity: '$products.products.quantity',
+                        shipped: '$products.products.shipped',
+                        delivered:'$products.products.delivered'
                     }
 
                 }

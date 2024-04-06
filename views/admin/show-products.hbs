@@ -1,4 +1,4 @@
-q<div class="table-responsive sticky-top m-3" >
+<div class="table-responsive sticky-top m-3" >
   <table class="table table-hover table-bordered">
     <thead class="table-success">
       <tr>
@@ -6,7 +6,9 @@ q<div class="table-responsive sticky-top m-3" >
         <th scope="col">Price</th>
         <th scope="col">Quantity</th>
         <th scope="col">Image</th>
-        <th scope="col">Status</th>
+        <th scope="col">Shipped</th>
+        <th scope="col">Delivered</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -16,7 +18,13 @@ q<div class="table-responsive sticky-top m-3" >
         <td>{{this.productDetails.price}}</td>
         <td>{{this.quantity}}</td>
         <td><img src="/images/{{this.productDetails._id}}.jpg" alt="Product 1 Image" width="50" height="50" class="img-thumbnail"></td>
-        <td>In Stock</td>
+        <td>{{this.shipped}}</td>
+        <td>{{this.delivered}}</td>
+        <td>{{#if ../placed}} <button class="btn btn-info" {{#if this.shipped}} style="display: none;"{{/if}} id="btn-ship{{this.productDetails._id}}"  onclick="shipping('{{this._id}}','{{this.productDetails._id}}')">Ship Product</button>
+        <button class="btn btn-info" id="btn-deliver{{this.productDetails._id}}" style="display:{{#if this.shipped}}{{#if this.delivered}}none {{else}} block{{/if }}{{else}}none{{/if}};"   onclick="deliver('{{this._id}}','{{this.productDetails._id}}')">Deliver Product</button>
+        
+        
+        {{else}}no payment{{/if}}</td>
       </tr>
       {{/each}}
       
@@ -24,3 +32,41 @@ q<div class="table-responsive sticky-top m-3" >
       </tbody>
   </table>
 </div>
+<script>
+  function shipping(orderId,proId){
+    console.log(orderId,proId)
+   $.ajax({
+            url: '/admin/shipping', // URL of your backend script
+            method: 'POST',
+            data: { orderId,
+            proId }, // Data to be sent
+            success: function(response){
+                console.log(response.products)
+                document.getElementById("btn-ship"+proId).style.display='none';
+                document.getElementById("btn-deliver"+proId).style.display='block';
+            },
+            error: function(xhr, status, error){
+                console.error(xhr.responseText);
+            }
+        });
+
+  }
+
+  function deliver(orderId,proId){
+    console.log(orderId,proId)
+   $.ajax({
+            url: '/admin/deliver', // URL of your backend script
+            method: 'POST',
+            data: { orderId,
+            proId }, // Data to be sent
+            success: function(response){
+                console.log(response.products)
+                
+                document.getElementById("btn-deliver"+proId).style.display='none';
+            },
+            error: function(xhr, status, error){
+                console.error(xhr.responseText);
+            }
+        });
+    }
+</script>

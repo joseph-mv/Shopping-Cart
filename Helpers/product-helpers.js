@@ -98,6 +98,31 @@ module.exports = {
                 resolve(data)
             })
         })
+    },
+    
+    statusShipping:(data)=>{
+
+            return new promise((resolve,reject)=>{
+                db.get().collection(collection.Orders_Collection).findOneAndUpdate({_id:new ObjectId(data.orderId),'products.products.productId':new ObjectId(data.proId) },{
+                    $set:{'products.products.$.shipped':new Date()}
+                }).then((data)=>{
+                    
+                    resolve(data)
+                })
+            })
+        },
+
+        statusDeliver:(data)=>{
+
+            return new promise((resolve,reject)=>{
+                db.get().collection(collection.Orders_Collection).findOneAndUpdate({_id:new ObjectId(data.orderId),'products.products.productId':new ObjectId(data.proId) },{
+                    $set:{'products.products.$.delivered':new Date()}
+                }).then((data)=>{
+                    
+                    resolve(data)
+                })
+            })
+        },
+
     }
 
-}
