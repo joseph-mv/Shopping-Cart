@@ -1,0 +1,49 @@
+
+  <style>
+    /* Custom styles */
+    .green-bg {
+      background-color: #c3e6cb; /* Green shade */
+      
+    }
+  </style>
+
+<body>
+
+<div class="container mt-5">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr class="green-bg text-black">
+          <th scope="col">Name</th>
+          <th scope="col">Address</th>
+          <th scope="col">Date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Payment Method</th>
+          <th scope="col">Total Amount</th>
+          <th scope="col"></th> <!-- Empty header -->
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orders}}
+        <tr>
+          <td>{{this.orderDetails.name}}
+          </td>
+          <td>{{this.orderDetails.deliveryAddress}} <br>
+          Pincode:{{this.orderDetails.pincode}} <br>
+          Phone:{{this.orderDetails.[Phone Number]}}</td>
+          <td>{{this.Date}}</td>
+          <td>{{this.status}}</td>
+          <td>{{this.orderDetails.paymentMethod}}</td>
+          <td>{{this.totalAmount}}</td>
+          <td><a href="/admin/show-products/{{this._id}}" class="btn btn-success">Show Products</a></td>
+        </tr>
+        {{/each}}
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+</body>
+

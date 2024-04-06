@@ -4,7 +4,7 @@ var router = express.Router();
 var productHelper=require('../Helpers/product-helpers')
 var express = require('express');
 var path = require('path');
-
+var userHelper = require('../Helpers/user-helpers');
 verifyAdmin=function() {
   return function(req, res,next){
     // console.log(req.session)
@@ -109,6 +109,20 @@ router.get("/users",verifyAdmin(),(req,res)=>{
   productHelper.getUsers().then((users)=>{
     console.log(users)
     res.render('admin/users',{admin:true,adminId:req.session.adminId,users})
+  })
+})
+router.get("/userOrders:id",verifyAdmin(),(req,res)=>{
+  userId=req.params.id
+  userHelper.orderList(userId).then((orders)=>{
+    console.log(orders)
+    res.render('admin/user-orders',{admin:true,adminId:req.session.adminId,orders})
+  })
+})
+router.get("/show-products/:id",verifyAdmin(),(req,res)=>{
+  orderId=req.params.id
+  console.log(orderId)
+  userHelper.orderedProducts(orderId).then((products)=>{
+    res.render('user/show-products',{admin:true,adminId:req.session.adminId,products})
   })
 })
 
