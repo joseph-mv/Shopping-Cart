@@ -80,6 +80,15 @@ module.exports = {
                 resolve(data)
             })
         })
+    },
+    getUsers:()=>{
+        return new promise((resolve,reject)=>{
+            db.get().collection(collection.User_Collection).find().toArray().then((data) => {
+                
+                resolve(data)
+            })
+        })
+
     }
 
 }

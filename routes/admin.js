@@ -105,5 +105,12 @@ productHelper.deleteProduct(req.body.productId).then((response)=>{
 
 })
 
+router.get("/users",verifyAdmin(),(req,res)=>{
+  productHelper.getUsers().then((users)=>{
+    console.log(users)
+    res.render('admin/users',{admin:true,adminId:req.session.adminId,users})
+  })
+})
+
 
 module.exports = router;

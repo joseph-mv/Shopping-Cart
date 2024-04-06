@@ -1,0 +1,52 @@
+
+
+  <style>
+    /* Custom CSS for color scheme */
+    .table-heading {
+      background-color: #343a40;
+      color: #fff;
+    }
+    .table-row:nth-of-type(even) {
+      background-color: #f8f9fa;
+    }
+    .table-row:nth-of-type(odd) {
+      background-color: #e9ecef;
+    }
+  </style>
+
+<body>
+
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="table-heading">
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each users}}
+        <tr class="table-row">
+          <td>{{this.name}}</td>
+          <td>{{this.address}}</td>
+          <td>{{this.email}}</td>
+          <td>{{this.age}}</td>
+          <td>{{this.gender}}</td>
+          <td><a href="" class="btn btn-info">Orders</a></td>
+        </tr>
+        {{/each}}
+      
+       
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+</body>
+
