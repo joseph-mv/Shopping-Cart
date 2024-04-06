@@ -7,9 +7,9 @@ var path = require('path');
 
 verifyAdmin=function() {
   return function(req, res,next){
-    console.log(req.session)
+    // console.log(req.session)
     if(req.session.adminId){
-      console.log(req.session.adminId)
+      // console.log(req.session.adminId)
       next()
     }
     else{
@@ -93,9 +93,16 @@ router.post("/edit-product",verifyAdmin(),(req,res)=>{
     }
     
     res.redirect('/admin/view-products')
- 
+  
   })
  
+})
+router.post("/delete-product",verifyAdmin(),(req,res)=>{
+console.log(req.body.productId)
+productHelper.deleteProduct(req.body.productId).then((response)=>{
+  res.json(response)
+})
+
 })
 
 

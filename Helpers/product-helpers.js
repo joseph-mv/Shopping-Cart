@@ -70,6 +70,16 @@ module.exports = {
                 resolve(data)
             })
         })
+    },
+    deleteProduct:(productId)=>{
+        return new promise((resolve,reject)=>{
+           
+            db.get().collection(collection.Product_Collection).findOneAndDelete({_id:new ObjectId(productId) }).then((data) => {
+                
+                console.log(data)
+                resolve(data)
+            })
+        })
     }
 
 }
