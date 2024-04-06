@@ -89,6 +89,15 @@ module.exports = {
             })
         })
 
+    },
+    allOrders:()=>{
+        
+        return new promise((resolve,reject)=>{
+            db.get().collection(collection.Orders_Collection).find().toArray().then((data)=>{
+                console.log(data)
+                resolve(data)
+            })
+        })
     }
 
 }

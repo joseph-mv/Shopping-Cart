@@ -122,7 +122,14 @@ router.get("/show-products/:id",verifyAdmin(),(req,res)=>{
   orderId=req.params.id
   console.log(orderId)
   userHelper.orderedProducts(orderId).then((products)=>{
-    res.render('user/show-products',{admin:true,adminId:req.session.adminId,products})
+    res.render('admin/show-products',{admin:true,adminId:req.session.adminId,products})
+  })
+})
+router.get('/allOrders',verifyAdmin(),(req,res)=>{
+  
+  productHelper.allOrders().then((orders)=>{
+    console.log(orders)
+    res.render('admin/user-orders',{admin:true,adminId:req.session.adminId,orders})
   })
 })
 
