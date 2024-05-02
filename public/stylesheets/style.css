@@ -1,4 +1,14 @@
 
+body{
+    background: hsla(0, 2%, 36%, 1);
+
+    background: linear-gradient(180deg, hsla(0, 2%, 36%, 1) 0%, hsla(15, 2%, 68%, 1) 20%, hsla(12, 9%, 89%, 1) 50%, hsla(15, 2%, 68%, 1) 80%, hsla(0, 2%, 36%, 1) 100%);
+    
+    background: -moz-linear-gradient(180deg, hsla(0, 2%, 36%, 1) 0%, hsla(15, 2%, 68%, 1) 20%, hsla(12, 9%, 89%, 1) 50%, hsla(15, 2%, 68%, 1) 80%, hsla(0, 2%, 36%, 1) 100%);
+    
+    background: -webkit-linear-gradient(180deg, hsla(0, 2%, 36%, 1) 0%, hsla(15, 2%, 68%, 1) 20%, hsla(12, 9%, 89%, 1) 50%, hsla(15, 2%, 68%, 1) 80%, hsla(0, 2%, 36%, 1) 100%);
+    
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#5D5A5A", endColorstr="#B0ADAC", GradientType=1 );}
 .gradient-custom {
     /* fallback for old browsers */
     background: #6a11cb;
@@ -9,3 +19,230 @@
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
     }
+
+    .products.card {
+
+        --bg-card: #27272ae9;
+        --primary: #6d28d9;
+        --primary-800: #4c1d95;
+        --primary-shadow: #2e1065;
+        --light: #d9d9d9;
+        --zinc-800: #18181b;
+        --bg-linear: linear-gradient(0deg, var(--primary) 50%, var(--light) 125%);
+      
+        position: relative;
+      
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 10px;
+        padding: 1rem;
+        width: 14rem;
+        background-color: var(--bg-card);
+      
+        border-radius: 1rem;
+      }
+      
+      .products .image_container {
+        overflow: hidden;
+        cursor: pointer;
+      
+        position: relative;
+        z-index: 5;
+      
+        width: 100%;
+        height: 13rem;
+        background-color: var(--primary-800);
+      
+        border-radius: 0.5rem;
+      }
+      
+      .products .image_container .image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      
+        width: 3rem;
+        fill: var(--light);
+      }
+      
+      .products .title {
+        overflow: clip;
+      
+        width: 100%;
+      
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--light);
+        text-transform: capitalize;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+      }
+      
+      .products .size {
+        font-size: 0.75rem;
+        color: var(--light);
+      }
+      
+      .products .list-size {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      
+        margin-top: 0.25rem;
+      }
+      
+      .products .list-size .item-list {
+        list-style: none;
+      }
+      
+      .products .list-size .item-list-button {
+        cursor: pointer;
+      
+        padding: 0.5rem;
+        background-color: var(--zinc-800);
+      
+        font-size: 0.75rem;
+        color: var(--light);
+      
+        border: 2px solid var(--zinc-800);
+        border-radius: 0.25rem;
+      
+        transition: all 0.3s ease-in-out;
+      }
+      
+      .products .item-list-button:hover {
+        border: 2px solid var(--light);
+      }
+      .products .item-list-button:focus {
+        background-color: var(--primary);
+      
+        border: 2px solid var(--primary-shadow);
+      
+        box-shadow: inset 0px 1px 4px var(--primary-shadow);
+      }
+      
+      .products .action {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      
+      .products .price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--light);
+      }
+      
+      .products .cart-button {
+        cursor: pointer;
+      
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25rem;
+      
+        padding: 0.5rem;
+        width: 100%;
+        background-image: var(--bg-linear);
+      
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--light);
+        text-wrap: nowrap;
+      
+        border: 2px solid hsla(262, 83%, 58%, 0.5);
+        border-radius: 0.5rem;
+        box-shadow: inset 0 0 0.25rem 1px var(--light);
+      }
+      
+      .products .cart-button .cart-icon {
+        width: 1rem;
+      }
+
+      .delete .button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: rgb(20, 20, 20);
+        border: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+        cursor: pointer;
+        transition-duration: .3s;
+        overflow: hidden;
+        position: relative;
+      }
+      
+      .delete .svgIcon {
+        width: 12px;
+        transition-duration: .3s;
+      }
+      
+      .delete .svgIcon path {
+        fill: white;
+      }
+      
+      .delete .button:hover {
+        width: 140px;
+        border-radius: 50px;
+        transition-duration: .3s;
+        background-color: rgb(255, 69, 69);
+        align-items: center;
+      }
+      
+      .delete .button:hover .svgIcon {
+        width: 50px;
+        transition-duration: .3s;
+        transform: translateY(60%);
+      }
+      
+      .delete .button::before {
+        position: absolute;
+        top: -20px;
+        content: "Delete";
+        color: white;
+        transition-duration: .3s;
+        font-size: 2px;
+      }
+      
+      .delete .button:hover::before {
+        font-size: 13px;
+        opacity: 1;
+        transform: translateY(30px);
+        transition-duration: .3s;
+      }
+
+      /* style form */
+
+      .form {
+        background-color: #15172b;
+        border-radius: 20px;
+        box-sizing: border-box;
+        margin: 10px;
+        padding: 20px;
+        width: 90%;
+        max-width: 600px;
+      }
+
+     .form label{
+        color: rgba(255, 255, 255, 0.13);
+     }
+     .form button{
+       width: 100%;
+     }
+
+     table{
+        background-color: #15344833;
+        border-radius: 10px;
+        border-width: 2px;
+        
+     }
+
+     td, th,tr {
+        border: none;
+      }
