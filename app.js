@@ -9,9 +9,11 @@ var fileUpload=require('express-fileupload')
 var session = require('express-session')
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
-
+var cors =require("cors")
 
 var app = express();
+
+
 
 var hbs = require('express-handlebars').create({
   extname: '.hbs',
@@ -50,7 +52,7 @@ app.use(fileUpload())
 app.use('/', userRouter);
 
 app.use('/admin', adminRouter);
-
+ 
 
 
 
