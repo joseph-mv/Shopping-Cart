@@ -29,7 +29,8 @@
 // }
 
 
-// const MongoClient = require("mongodb").MongoClient
+
+
 const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config()
 var state={
@@ -38,7 +39,7 @@ var state={
 
 
 module.exports.connect = async function(done){
-    const uri = "mongodb+srv://josephmv43:Adholokam$1042@josephmv.hnlelvv.mongodb.net/?retryWrites=true&w=majority&appName=josephMV";
+    const uri = "mongodb+srv://josephmv43:Adholokam$1042@josephmv.hnlelvv.mongodb.net/?retryWrites=true&w=majority&appName=josephMV"
     // const uri=process.env.mongo_uri
     const client = new MongoClient(uri, {
         serverApi: {
@@ -56,6 +57,7 @@ module.exports.connect = async function(done){
         state.db = data.db(dbname); 
 
      done()
+    
      
     })
     .catch((error) => {
