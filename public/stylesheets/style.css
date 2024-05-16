@@ -246,3 +246,8 @@ body{
      td, th,tr {
         border: none;
       }
+      .form-label{
+        color: white  !important; 
+        
+      }
+     
