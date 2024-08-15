@@ -3,7 +3,8 @@ var state={
     db:null
 }
 module.exports.connect = async function(done){
-    var url = "mongodb://localhost:27017";
+    var url = process.env.MONGODB_URI;
+  
     dbname='ShoppingCart'
     
    

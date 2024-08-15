@@ -10,6 +10,7 @@ var session = require('express-session')
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 var cors =require("cors")
+require('dotenv').config();
 
 var app = express();
 
@@ -34,8 +35,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 db.connect((err)=>{
 if (err){console.log("connection error")}
 else 
-console.log('connected successfully');
-
+console.log('connected successfully ');
+console.log('Open your web browser and navigate to `http://localhost:3000`')
+ 
 });
 app.use(session({
   secret: 'cat running',

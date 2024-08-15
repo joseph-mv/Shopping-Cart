@@ -321,8 +321,8 @@ module.exports = {
     },
     razorpay: (amount,orderId) => {
         return new promise((resolve, reject) => {
-            // console.log('@@@@@@@@@@@online')
-            var instance = new Razorpay({ key_id: 'rzp_test_CvKuMmA01LWWap', key_secret: 'NCjKTDMTpdIZ8uSXmEUKBfDp' })
+           
+            var instance = new Razorpay({ key_id: process.env.RAZORPAY_KEY_ID, key_secret: process.env.RAZORPAY_KEY_SECRET })
 
             instance.orders.create({
                 amount: amount*100,
