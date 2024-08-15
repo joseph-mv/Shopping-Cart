@@ -5,7 +5,7 @@ const collection = require("../config/collection");
 const { response } = require('express');
 const { ObjectId } = require('mongodb');
 const Razorpay = require('razorpay');
-const { resolve } = require('path');
+const { resolve } = require('path')
 
 
 module.exports = {
